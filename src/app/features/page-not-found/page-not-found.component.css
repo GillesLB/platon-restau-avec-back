@@ -1,0 +1,32 @@
+.centrer-texte {
+    text-align: center;
+}
+
+.taille-texte {
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+
+.margin-texte {
+    margin-left: 560px;
+}
+
+.centrer-image {
+    display: block;
+    margin: auto;
+    width: 20%;
+    margin-bottom: 30px;
+}
+
+.espace-haut {
+    height: 20px;
+}
+
+.hauteur-minimum {
+    min-height: 790px;
+}
+
+.principal{
+    margin-left: 210px;
+}

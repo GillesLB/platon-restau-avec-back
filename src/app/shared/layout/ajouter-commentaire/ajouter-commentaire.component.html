@@ -1,0 +1,41 @@
+<div class="titre-page">Saisissez votre commentaire : </div>
+
+<div class="centrer-formulaire margin-bottom">
+  <form (ngSubmit)="envoiCommentaire()" [formGroup]="commentaireForm">
+
+    <div class="margin-auteur">
+      <label class="titre-formulaire" for="auteur">Auteur : </label>
+      <input
+        class=""
+        type="text" 
+        name="auteur"
+        id="auteur"
+        formControlName="auteur"
+      />
+    </div>
+
+    <div class="alignement-vertical margin-texte">
+      <label class="titre-formulaire" for="texte">Commentaire : </label>
+      <textarea
+        rows="8"
+        class="col-10"
+        name="texte" 
+        id="texte"
+        formControlName="texte"
+      >
+      </textarea>
+    </div>
+
+    <button
+      class="btn btn-success"
+      type="submit"  
+      name="bouton-envoyer"
+      id="bouton-envoyer"
+      [disabled]="!commentaireForm.valid"
+      (click)="cacherMessageConfirmationEnvoiCommentaire()"
+    >
+      Envoyer le commentaire
+    </button>
+  
+  </form>
+</div>

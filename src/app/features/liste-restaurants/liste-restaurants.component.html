@@ -1,0 +1,66 @@
+<div>
+
+  <div>
+    <div class="font-weight-bold text-center titre my-3">Liste des restaurants :</div>
+  </div>
+
+  <div class="row justify-content-center cotes mb-3">
+    <table class="table table-striped">
+
+      <thead class="text-center thead-dark">
+        <tr>
+          <th scope="col" class="col-3">Nom</th>
+          <th scope="col" class="col-3">Adresse</th>
+          <th scope="col" class="col-2">Visité le</th>
+          <th scope="col" class="col-1">Note</th>
+          <th scope="col" class="col-1">Nb visites</th>
+          <th scope="col" class="col-1">Comm.</th>
+          <th scope="col" class="col-1">Détail</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <ng-container *ngFor="let restaurant of listeRestaurants | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <tr>
+            <td scope="col" class="font-weight-bold">{{restaurant.nom}}</td>
+            <td scope="col">{{restaurant.adresse}}</td> 
+            <td scope="col" class="text-center">{{restaurant.dateDerniereVisite | amParse:'DD/MM/YYYY' | amDateFormat: 'DD/MM/YY'}}</td>
+            <td scope="col" *ngIf="restaurant.note" class="text-center">{{restaurant.note}} / 5</td>
+            <td scope="col" *ngIf="!restaurant.note" class="text-center">-</td>
+            <td scope="col" class="text-center">{{restaurant.nombreVisite}}</td>
+            <td scope="col" *ngIf="restaurant.nombreCommentaire" class="text-center">{{restaurant.nombreCommentaire}}</td>
+            <td scope="col" *ngIf="!restaurant.nombreCommentaire" class="text-center">-</td>
+            <td scope="col" class="text-center">
+              <a [routerLink]="['/liste', restaurant.restaurantId]">
+                <button
+                  class="btn btn-secondary btn-sm"
+                  type="button"  
+                  name="bouton-detail"
+                  id="bouton-detail"
+                >
+                  <i class="fas fa-id-card"></i>
+                  Détail
+                </button>
+              </a>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+
+    </table>
+  </div>
+
+  <!-- pagination de Angular bootstrap -->
+  <div *ngIf="listeRestaurants.length > 7">
+    <ngb-pagination
+      class="d-flex justify-content-center"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="listeRestaurants.length"
+      [rotate]="true"
+      [boundaryLinks]="true"
+    >
+    </ngb-pagination>
+  </div>
+
+</div>
