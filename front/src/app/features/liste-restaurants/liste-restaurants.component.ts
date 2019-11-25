@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-
-import {Subscriber} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
+import {Subscriber} from 'rxjs';
 
 @Component({
   selector: 'app-liste-restaurants',
@@ -16,12 +14,8 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
   pageSize = 7;
 
   listeRestaurants;
-
   loading = false;
-  moyenne: number[] = [];
-  noteMoyenne = 0;
   nombreCommentaire = 0;
-  tableauNoteMoyenne: number[] = [];
   tableauNombreCommentaire: number[] = [];
 
   subscriber = new Subscriber();
@@ -44,8 +38,8 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
         .subscribe(
           (restauListe) => {
             this.listeRestaurants = restauListe;
-            this.getNoteLength();
-            this.getCommentLength();
+            console.log('tl : ', this.listeRestaurants);
+            // this.getCommentLength();
           },
           (error) => {
             console.log('Erreur : ', error);
@@ -56,30 +50,6 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
           }
         )
     );
-  }
-
-  getNoteLength() {
-    for (const restaurant of this.listeRestaurants) {
-      if (restaurant.notes_1) {
-        this.moyenne.push(restaurant.notes_1);
-      }
-      if (restaurant.notes_2) {
-        this.moyenne.push(restaurant.notes_2);
-      }
-      if (restaurant.notes_3) {
-        this.moyenne.push(restaurant.notes_3);
-      }
-      if (restaurant.notes_4) {
-        this.moyenne.push(restaurant.notes_4);
-      }
-      if (restaurant.notes_5) {
-        this.moyenne.push(restaurant.notes_5);
-      }
-      this.noteMoyenne = this.moyenne.length > 0 ? Math.round((this.moyenne.reduce((a, b) => a + b, 0)) / this.moyenne.length) : 0;
-      this.tableauNoteMoyenne.push(this.noteMoyenne);
-      this.moyenne = [];
-      this.noteMoyenne = 0;
-    }
   }
 
   getCommentLength() {

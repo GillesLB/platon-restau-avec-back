@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import { restaurants } from 'src/app/core/liste-restaurants';
-import { RestaurantDelete, RestaurantRead } from 'src/app/core/actions/restaurant.action';
 import { RestaurantsService } from 'src/app/features/services/restaurants.service';
 import { Restaurant } from 'src/app/core/restaurant';
 
@@ -37,7 +36,6 @@ export class SupprimerRestaurantComponent implements OnInit {
     private store: Store<{restaurant: object}>
   ) {
     this.listeRestaurants = this.restaurantsService.listeRestaurants;
-    // this.restaurant$ = store.pipe(select('restaurant'));
   }
 
   open(content) {
@@ -56,10 +54,6 @@ export class SupprimerRestaurantComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
-  }
-
-  montrerListe() {
-    // this.store.dispatch(new RestaurantRead());
   }
 
   ngOnInit() {
@@ -86,7 +80,6 @@ export class SupprimerRestaurantComponent implements OnInit {
       for (let j = 0; j < this.restaurants.length; j++) {
         this.restaurants[j].restaurantId = j;
       }
-    // this.store.dispatch(new RestaurantDelete(this.restaurants));
     this.restaurantsService.listeRestaurants = this.restaurants;
     this.afficherBoutonSupprimer = false;
     this.aSupprimer = [];

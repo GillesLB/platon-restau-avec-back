@@ -4,22 +4,12 @@ const bodyParser = require('body-parser');
 const conn = require('../connection');
 const app = express();
 
-const getRestaurants = `SELECT * 
-                        FROM restaurants
-                        INNER JOIN notes
-                        ON restaurants.id = notes.id_notes
-                        INNER JOIN commentaires
-                        ON restaurants.id = commentaires.id_commentaires
+const getRestaurants = `SELECT id, nom, adresse, date_visite, AVG(note) AS note_moyenne, nb_visite
+                         FROM restaurants
+                         INNER JOIN notes
+                         ON restaurants.id = notes.id_restau
+                         GROUP BY restaurants.id
                         `;
-
-// const getRestaurant = `SELECT *
-//                         FROM restaurants
-//                         INNER JOIN notes
-//                         ON restaurants.id = notes.id_notes
-//                         INNER JOIN commentaires
-//                         ON restaurants.id = commentaires.id_commentaires
-//                         WHERE restaurants.id = ${req.params.id}
-//                         `;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -31,17 +21,13 @@ router.get('/', (req, res) => {
         } else {
             res.send(rows);
         }
-    })
+    });
 });
 
 router.get('/:id', (req, res) => {
-    conn.query(`SELECT *
-                                FROM restaurants
-                                INNER JOIN notes
-                                ON restaurants.id = notes.id_notes
-                                INNER JOIN commentaires
-                                ON restaurants.id = commentaires.id_commentaires
-                                WHERE restaurants.id = ${req.params.id}`
+    conn.query(`SELECT commentaire
+                                FROM commentaires
+                                WHERE commentaires.id_restau = ${req.params.id}`
         , (err, rows, fields) => {
         if (err) {
             console.log('Erreur de récupération : ', err);
@@ -52,7 +38,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/:id/ajouter-note', (req, res) => {
-    conn.query(`UPDATE notes SET notes_5 = (?) WHERE id_notes = ${req.params.id}`, [req.body.note], (err, rows, fields) => {
+    conn.query(`INSERT INTO notes (id_restau, note) VALUES (?, ?)`, [req.params.id, req.body.note], (err, rows, fields) => {
         if (err) {
             console.log('Erreur de mise en base : ', err);
         } else {

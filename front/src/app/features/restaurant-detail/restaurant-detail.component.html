@@ -18,8 +18,8 @@
 
     <div class="ml-3 mb-2 taille-texte align">
       <span class="font-weight-bold">Note moyenne : </span>
-      <span *ngIf="noteMoyenne === 0" class="font-italic"> Pas encore de note ...</span>
-      <span *ngIf="noteMoyenne > 0"></span>{{noteMoyenne}}
+      <span *ngIf="restaurant.note_moyenne === 0" class="font-italic"> Pas encore de note ...</span>
+      <span *ngIf="restaurant.note_moyenne > 0">{{restaurant.note_moyenne | number:'1.0-1'}}</span>
     </div>
 
     <div class="ml-3 mb-4 taille-texte">
@@ -31,22 +31,22 @@
       <div class="font-weight-bold mb-2">Commentaire(s) :</div>
 
         <div
-          *ngIf="tableauCommentaires.length === 0"
+          *ngIf="commentaires.length === 0"
           class="font-italic mb-4"
         >
           Pas encore de commentaire ...
         </div>
 
       <div
-        *ngIf="tableauCommentaires.length > 0"
+        *ngIf="commentaires.length > 0"
       >
         <div
-          *ngFor="let commentaire of tableauCommentaires"
+          *ngFor="let commentaire of commentaires"
           class="mb-2"
         >
           <ul>
 <!--            <li><span class="font-weight-bold">Auteur : </span>{{commentaire.auteur}}</li>-->
-            <li><span class="font-weight-bold">Commentaire : </span>{{commentaire}}</li>
+            <li><span class="font-weight-bold">Commentaire : </span>{{commentaire.commentaire}}</li>
           </ul>
         </div>
 

@@ -9,13 +9,14 @@
 
       <thead class="text-center thead-dark">
         <tr>
-          <th scope="col" class="col-3">Nom</th>
+          <th scope="col" class="col-2">Nom</th>
           <th scope="col" class="col-3">Adresse</th>
           <th scope="col" class="col-2">Visité le</th>
           <th scope="col" class="col-1">Note</th>
           <th scope="col" class="col-1">Nb visites</th>
-          <th scope="col" class="col-1">Comm.</th>
           <th scope="col" class="col-1">Détail</th>
+          <th scope="col" class="col-1">Mise à jour</th>
+          <th scope="col" class="col-1">Supprimer</th>
         </tr>
       </thead>
 
@@ -25,11 +26,9 @@
             <td scope="col" class="font-weight-bold">{{restaurant.nom}}</td>
             <td scope="col">{{restaurant.adresse}}</td>
             <td scope="col" class="text-center">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
-            <td scope="col" *ngIf="tableauNoteMoyenne[i] > 0" class="text-center">{{tableauNoteMoyenne[i]}} / 5</td>
-            <td scope="col" *ngIf="tableauNoteMoyenne[i] === 0" class="text-center">-</td>
+            <td scope="col" *ngIf="restaurant.note_moyenne > 0" class="text-center">{{restaurant.note_moyenne | number:'1.0-1'}} / 5</td>
+            <td scope="col" *ngIf="restaurant.note_moyenne === 0" class="text-center">-</td>
             <td scope="col" class="text-center">{{restaurant.nb_visite}}</td>
-            <td scope="col" *ngIf="tableauNombreCommentaire[i] > 0" class="text-center">{{tableauNombreCommentaire[i]}}</td>
-            <td scope="col" *ngIf="tableauNombreCommentaire[i] === 0" class="text-center">-</td>
             <td scope="col" class="text-center">
               <a [routerLink]="['/liste', restaurant.id]">
                 <button
@@ -39,9 +38,30 @@
                   id="bouton-detail"
                 >
                   <i class="fas fa-id-card"></i>
-                  Détail
                 </button>
               </a>
+            </td>
+            <td scope="col" class="text-center">
+              <a [routerLink]="['/liste', restaurant.id]">
+                <button
+                  class="btn btn-primary btn-sm"
+                  type="button"
+                  name="bouton-update"
+                  id="bouton-update"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+              </a>
+            </td>
+            <td scope="col" class="text-center">
+              <button
+                class="btn btn-danger btn-sm"
+                type="button"
+                name="bouton-supprimer"
+                id="bouton-supprimer"
+              >
+                <i class="fas fa-times"></i>
+              </button>
             </td>
           </tr>
         </ng-container>

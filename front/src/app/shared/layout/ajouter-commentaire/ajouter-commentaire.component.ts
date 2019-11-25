@@ -6,7 +6,6 @@ import { Store, select } from '@ngrx/store';
 import { restaurants } from 'src/app/core/liste-restaurants';
 import { RestaurantDetailComponent } from 'src/app/features/restaurant-detail/restaurant-detail.component';
 import { ICommentaire, Commentaire } from 'src/app/core/commentaire';
-import { CommentAdd } from 'src/app/core/actions/restaurant.action';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -48,7 +47,6 @@ export class AjouterCommentaireComponent implements OnInit {
     (restaurants[this.restaurantDetailComponent.id].commentaire).push({'auteur': auteur, 'texte': texte});
     const ajoutNombreCommentaire = (restaurants[this.restaurantDetailComponent.id].nombreCommentaire) + 1;
     restaurants[this.restaurantDetailComponent.id].nombreCommentaire = ajoutNombreCommentaire;
-    // this.store.dispatch(new CommentAdd(this.restaurants));
   }
 
 }

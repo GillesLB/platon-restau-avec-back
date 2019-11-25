@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
 import { restaurants } from 'src/app/core/liste-restaurants';
-import { RestaurantAdd } from 'src/app/core/actions/restaurant.action';
 import { IRestaurant, Restaurant } from 'src/app/core/restaurant';
 import { RestaurantsService } from 'src/app/features/services/restaurants.service';
 
