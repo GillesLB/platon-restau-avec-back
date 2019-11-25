@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!loading">
 
   <div>
     <div class="font-weight-bold text-center titre my-3">Liste des restaurants :</div>
@@ -23,18 +23,18 @@
         <ng-container *ngFor="let restaurant of listeRestaurants | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           <tr>
             <td scope="col" class="font-weight-bold">{{restaurant.nom}}</td>
-            <td scope="col">{{restaurant.adresse}}</td> 
-            <td scope="col" class="text-center">{{restaurant.dateDerniereVisite | amParse:'DD/MM/YYYY' | amDateFormat: 'DD/MM/YY'}}</td>
+            <td scope="col">{{restaurant.adresse}}</td>
+            <td scope="col" class="text-center">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
             <td scope="col" *ngIf="restaurant.note" class="text-center">{{restaurant.note}} / 5</td>
             <td scope="col" *ngIf="!restaurant.note" class="text-center">-</td>
-            <td scope="col" class="text-center">{{restaurant.nombreVisite}}</td>
+            <td scope="col" class="text-center">{{restaurant.nb_visite}}</td>
             <td scope="col" *ngIf="restaurant.nombreCommentaire" class="text-center">{{restaurant.nombreCommentaire}}</td>
             <td scope="col" *ngIf="!restaurant.nombreCommentaire" class="text-center">-</td>
             <td scope="col" class="text-center">
               <a [routerLink]="['/liste', restaurant.restaurantId]">
                 <button
                   class="btn btn-secondary btn-sm"
-                  type="button"  
+                  type="button"
                   name="bouton-detail"
                   id="bouton-detail"
                 >
@@ -63,4 +63,8 @@
     </ngb-pagination>
   </div>
 
+</div>
+
+<div *ngIf="loading">
+  Chargement ...
 </div>

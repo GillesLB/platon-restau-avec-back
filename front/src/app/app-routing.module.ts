@@ -12,6 +12,4 @@ import { routes } from 'src/app/core/routes';
   exports: [RouterModule],
   declarations: []
 })
-export class AppRoutingModule {
-
-}
+export class AppRoutingModule { }
