@@ -1,29 +1,29 @@
 <div class="mt-5 row justify-content-center">
 
-  <div class="border border-secondary bg-light col-4" *ngIf="detailRestaurant">
+  <div class="border border-secondary bg-light col-4" *ngIf="!loading">
 
     <div class="row justify-content-center titre-fiche font-weight-bold mt-2 mb-5">Fiche du restaurant</div>
 
     <div class="ml-3 mb-2 taille-texte">
-      <span class="font-weight-bold">Nom de l'établissement : </span>{{listeRestaurants[id].nom}}
+      <span class="font-weight-bold">Nom de l'établissement : </span>{{restaurant.nom}}
     </div>
 
     <div class="ml-3 mb-2 taille-texte">
-      <span class="font-weight-bold">Adresse : </span>{{listeRestaurants[id].adresse}}
+      <span class="font-weight-bold">Adresse : </span>{{restaurant.adresse}}
     </div>
 
     <div class="ml-3 mb-2 taille-texte">
-      <span class="font-weight-bold">Date de visite : </span>{{listeRestaurants[id].dateDerniereVisite}}
+      <span class="font-weight-bold">Date de visite : </span>{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}
     </div>
 
     <div class="ml-3 mb-2 taille-texte align">
-      <span class="font-weight-bold">Note : </span>
-      <span *ngIf="!listeRestaurants[id].note" class="font-italic"> Pas encore de note ...</span>
-      <span *ngIf="listeRestaurants[id].note"></span>{{listeRestaurants[id].note}}
+      <span class="font-weight-bold">Note moyenne : </span>
+      <span *ngIf="noteMoyenne === 0" class="font-italic"> Pas encore de note ...</span>
+      <span *ngIf="noteMoyenne > 0"></span>{{noteMoyenne}}
     </div>
 
     <div class="ml-3 mb-4 taille-texte">
-      <span class="font-weight-bold">Nombre de visite : </span>{{listeRestaurants[id].nombreVisite}}
+      <span class="font-weight-bold">Nombre de visite : </span>{{restaurant.nb_visite}}
     </div>
 
     <div class="ml-3 taille-texte">
@@ -31,22 +31,22 @@
       <div class="font-weight-bold mb-2">Commentaire(s) :</div>
 
         <div
-          *ngIf="!listeRestaurants[id].nombreCommentaire"
+          *ngIf="tableauCommentaires.length === 0"
           class="font-italic mb-4"
         >
           Pas encore de commentaire ...
         </div>
 
       <div
-        *ngIf="listeRestaurants[id].nombreCommentaire"
+        *ngIf="tableauCommentaires.length > 0"
       >
-        <div 
-          *ngFor="let commentaire of listeRestaurants[id].commentaire"
+        <div
+          *ngFor="let commentaire of tableauCommentaires"
           class="mb-2"
         >
           <ul>
-            <li><span class="font-weight-bold">Auteur : </span>{{commentaire.auteur}}</li>
-            <li><span class="font-weight-bold">Commentaire : </span>{{commentaire.texte}}</li>
+<!--            <li><span class="font-weight-bold">Auteur : </span>{{commentaire.auteur}}</li>-->
+            <li><span class="font-weight-bold">Commentaire : </span>{{commentaire}}</li>
           </ul>
         </div>
 
@@ -55,10 +55,10 @@
     </div>
 
   </div>
-  
+
   <div class="row justify-content-center">
 
-    <ngb-alert 
+    <ngb-alert
       *ngIf="commentaireEnvoye"
       class="col-4 font-weight-bold text-center"
       type="success"
@@ -78,24 +78,28 @@
 
   </div>
 
+  <div *ngIf="loading">
+    Chargement ...
+  </div>
+
 </div>
 
 <div class="row justify-content-center mt-5">
 
   <span *ngIf="detailRestaurant">
-    <button 
+    <button
       type="button"
-      class="btn btn-secondary mx-4" 
-      (click)="cacherFiche()"
+      class="btn btn-secondary mx-4"
+      (click)="ajouterNote()"
     >
       Ajouter une note
     </button>
   </span>
 
   <span *ngIf="formulaireNote">
-    <button 
+    <button
       type="button"
-      class="btn btn-danger mx-4 mb-3" 
+      class="btn btn-danger mx-4 mb-3"
       (click)="montrerFiche()"
     >
       Annuler cette note
@@ -103,9 +107,9 @@
   </span>
 
   <span *ngIf="detailRestaurant">
-    <button 
+    <button
       type="button"
-      class="btn btn-primary mx-4" 
+      class="btn btn-primary mx-4"
       (click)="cacherVisibleNote(); cacherFicheRestaurant()"
     >
       Ajouter un commentaire
@@ -113,9 +117,9 @@
   </span>
 
   <span *ngIf="formulaireComm">
-    <button 
+    <button
       type="button"
-      class="btn btn-danger mx-4" 
+      class="btn btn-danger mx-4"
       (click)="cacherVisibleNote(); cacherFicheRestaurant()"
     >
       Annuler ce commentaire

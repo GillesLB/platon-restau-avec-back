@@ -7,12 +7,14 @@ import { AjouterRestaurantComponent } from 'src/app/features/ajouter-restaurant/
 import { SupprimerRestaurantComponent } from 'src/app/features/supprimer-restaurant/supprimer-restaurant.component';
 import { PageNotFoundComponent } from 'src/app/features/page-not-found/page-not-found.component';
 import { CarteRestaurantsComponent } from 'src/app/features/carte-restaurants/carte-restaurants.component';
+import {AjouterNoteComponent} from '../features/ajouter-note/ajouter-note.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'accueil', pathMatch: 'full'},
   { path: 'accueil', component: PageAccueilComponent },
   { path: 'liste', component: ListeRestaurantsComponent },
   { path: 'liste/:restaurantId', component: RestaurantDetailComponent },
+  { path: 'liste/:restaurantId/ajouter-note', component: AjouterNoteComponent },
   { path: 'ajouter-restaurant', component: AjouterRestaurantComponent },
   { path: 'supprimer-restaurant', component: SupprimerRestaurantComponent },
   { path: 'carte-restaurants', component: CarteRestaurantsComponent },

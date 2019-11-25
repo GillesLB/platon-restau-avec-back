@@ -1,12 +1,12 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-3">
   <div class="border border-secondary bg-light col-4">
-    <form>
+    <form [formGroup]="noteForm" (ngSubmit)="envoyerNote()">
 
       <div class="titre-page font-weight-bold text-center my-3">Choisissez votre note : </div>
-    
+
       <div class="row justify-content-center">
 
-        <select class="form-control col-8 mb-3">
+        <select class="form-control col-8 mb-3" formControlName="note">
           <option
             *ngFor="let note of notes"
             [value]="note.note"
@@ -14,16 +14,15 @@
             {{note.avis}} note de {{note.note}} sur 5
           </option>
         </select>
-        
+
       </div>
 
       <div class="row justify-content-center">
         <button
           class="btn btn-success mt-3 mb-4"
-          type="submit"  
-          (click)="envoyerNote()"
+          [disabled]="noteForm.invalid"
         >
-          Envoyer la note
+          Valider la note
         </button>
       </div>
 

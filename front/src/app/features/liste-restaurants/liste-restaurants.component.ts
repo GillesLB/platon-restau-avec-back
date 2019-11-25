@@ -18,6 +18,11 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
   listeRestaurants;
 
   loading = false;
+  moyenne: number[] = [];
+  noteMoyenne = 0;
+  nombreCommentaire = 0;
+  tableauNoteMoyenne: number[] = [];
+  tableauNombreCommentaire: number[] = [];
 
   subscriber = new Subscriber();
 
@@ -39,7 +44,8 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
         .subscribe(
           (restauListe) => {
             this.listeRestaurants = restauListe;
-            console.log(this.listeRestaurants);
+            this.getNoteLength();
+            this.getCommentLength();
           },
           (error) => {
             console.log('Erreur : ', error);
@@ -50,6 +56,52 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
           }
         )
     );
+  }
+
+  getNoteLength() {
+    for (const restaurant of this.listeRestaurants) {
+      if (restaurant.notes_1) {
+        this.moyenne.push(restaurant.notes_1);
+      }
+      if (restaurant.notes_2) {
+        this.moyenne.push(restaurant.notes_2);
+      }
+      if (restaurant.notes_3) {
+        this.moyenne.push(restaurant.notes_3);
+      }
+      if (restaurant.notes_4) {
+        this.moyenne.push(restaurant.notes_4);
+      }
+      if (restaurant.notes_5) {
+        this.moyenne.push(restaurant.notes_5);
+      }
+      this.noteMoyenne = this.moyenne.length > 0 ? Math.round((this.moyenne.reduce((a, b) => a + b, 0)) / this.moyenne.length) : 0;
+      this.tableauNoteMoyenne.push(this.noteMoyenne);
+      this.moyenne = [];
+      this.noteMoyenne = 0;
+    }
+  }
+
+  getCommentLength() {
+    for (const restaurant of this.listeRestaurants) {
+      if (restaurant.commentaires_1) {
+        this.nombreCommentaire++;
+      }
+      if (restaurant.commentaires_2) {
+        this.nombreCommentaire++;
+      }
+      if (restaurant.commentaires_3) {
+        this.nombreCommentaire++;
+      }
+      if (restaurant.commentaires_4) {
+        this.nombreCommentaire++;
+      }
+      if (restaurant.commentaires_5) {
+        this.nombreCommentaire++;
+      }
+      this.tableauNombreCommentaire.push(this.nombreCommentaire);
+      this.nombreCommentaire = 0;
+    }
   }
 
   ngOnDestroy(): void {

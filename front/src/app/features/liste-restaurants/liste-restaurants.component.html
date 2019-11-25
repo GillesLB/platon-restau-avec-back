@@ -20,18 +20,18 @@
       </thead>
 
       <tbody>
-        <ng-container *ngFor="let restaurant of listeRestaurants | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+        <ng-container *ngFor="let restaurant of listeRestaurants | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
           <tr>
             <td scope="col" class="font-weight-bold">{{restaurant.nom}}</td>
             <td scope="col">{{restaurant.adresse}}</td>
             <td scope="col" class="text-center">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
-            <td scope="col" *ngIf="restaurant.note" class="text-center">{{restaurant.note}} / 5</td>
-            <td scope="col" *ngIf="!restaurant.note" class="text-center">-</td>
+            <td scope="col" *ngIf="tableauNoteMoyenne[i] > 0" class="text-center">{{tableauNoteMoyenne[i]}} / 5</td>
+            <td scope="col" *ngIf="tableauNoteMoyenne[i] === 0" class="text-center">-</td>
             <td scope="col" class="text-center">{{restaurant.nb_visite}}</td>
-            <td scope="col" *ngIf="restaurant.nombreCommentaire" class="text-center">{{restaurant.nombreCommentaire}}</td>
-            <td scope="col" *ngIf="!restaurant.nombreCommentaire" class="text-center">-</td>
+            <td scope="col" *ngIf="tableauNombreCommentaire[i] > 0" class="text-center">{{tableauNombreCommentaire[i]}}</td>
+            <td scope="col" *ngIf="tableauNombreCommentaire[i] === 0" class="text-center">-</td>
             <td scope="col" class="text-center">
-              <a [routerLink]="['/liste', restaurant.restaurantId]">
+              <a [routerLink]="['/liste', restaurant.id]">
                 <button
                   class="btn btn-secondary btn-sm"
                   type="button"
