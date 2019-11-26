@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {Subscriber} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-liste-restaurants',
@@ -24,6 +25,7 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
 
   constructor(
     public httpClient: HttpClient,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -52,26 +54,25 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
     );
   }
 
-  getCommentLength() {
-    for (const restaurant of this.listeRestaurants) {
-      if (restaurant.commentaires_1) {
-        this.nombreCommentaire++;
-      }
-      if (restaurant.commentaires_2) {
-        this.nombreCommentaire++;
-      }
-      if (restaurant.commentaires_3) {
-        this.nombreCommentaire++;
-      }
-      if (restaurant.commentaires_4) {
-        this.nombreCommentaire++;
-      }
-      if (restaurant.commentaires_5) {
-        this.nombreCommentaire++;
-      }
-      this.tableauNombreCommentaire.push(this.nombreCommentaire);
-      this.nombreCommentaire = 0;
-    }
+  onDelete(restaurant) {
+    console.log('r : ', restaurant);
+    this.loading = false;
+
+    this.subscriber.add(
+      this.httpClient.delete(this.url + restaurant.id)
+        .subscribe(
+          () => {
+          },
+          (error) => {
+            console.log('Erreur : ', error);
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+            this.router.navigate(['/']);
+          }
+        )
+    );
   }
 
   ngOnDestroy(): void {

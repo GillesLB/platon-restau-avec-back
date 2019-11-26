@@ -1,107 +1,111 @@
-<div *ngIf="!loading">
+<div class="mt-5 row justify-content-center">
 
-  <form [formGroup]="updateRestaurantForm">
+  <div *ngIf="loading">
+    Chargement ...
+  </div>
 
-    <div class="row justify-content-center titre-formulaire font-weight-bold mt-2 mb-5">Mettre à jour un restaurant : </div>
+  <div class="border border-secondary bg-light" *ngIf="!loading">
 
-    <div class="form-group row no-gutters mx-3">
-      <label
-        class="font-weight-bold col-12"
-        for="nom"
-      >
-        Nom du restaurant :
-      </label>
-      <input
-        class="col-6 form-control"
-        type="text"
-        name="nom"
-        id="nom"
-        formControlName="nom"
-      />
-    </div>
+    <form [formGroup]="updateRestaurantForm">
 
-    <div class="form-group row no-gutters mx-3">
-      <label
-        class="font-weight-bold col-12"
-        for="adresse"
-      >
-        Adresse du restaurant :
-      </label>
-      <input
-        class="col-6 form-control"
-        type="text"
-        name="adresse"
-        id="adresse"
-        formControlName="adresse"
-      />
-    </div>
+      <div class="row justify-content-center titre-formulaire font-weight-bold mt-2 mb-5">Mettre à jour ce restaurant : </div>
 
-    <div class="form-group row no-gutters mx-3">
-      <label
-        class="font-weight-bold col-12"
-        for="dateDerniereVisite"
-      >
-        Date de la dernière visite :
-      </label>
-      <input
-        class="col-4 form-control"
-        type="text"
-        name="dateDerniereVisite"
-        id="dateDerniereVisite"
-        formControlName="dateDerniereVisite"
-      />
-    </div>
-
-    <div class="row mx-3">
-      <div class="form-group row no-gutters">
+      <div class="form-group row no-gutters mx-3">
         <label
           class="font-weight-bold col-12"
-          for="latitude"
+          for="nom"
         >
-          Latitude :
+          Nom du restaurant :
         </label>
         <input
-          class="col-6 form-control"
+          class="col-13 form-control"
           type="text"
-          name="latitude"
-          id="latitude"
-          formControlName="latitude"
+          name="nom"
+          id="nom"
+          formControlName="nom"
         />
       </div>
 
       <div class="form-group row no-gutters mx-3">
         <label
           class="font-weight-bold col-12"
-          for="longitude"
+          for="adresse"
         >
-          Longitude :
+          Adresse du restaurant :
         </label>
         <input
-          class="col-6 form-control"
+          class="col-12 form-control"
           type="text"
-          name="longitude"
-          id="longitude"
-          formControlName="longitude"
+          name="adresse"
+          id="adresse"
+          formControlName="adresse"
         />
       </div>
-    </div>
 
-    <div class="mb-3 mt-5 row justify-content-center">
-      <button
-        class="btn btn-success"
-        type="submit"
-        (click)="onSubmit()"
-        [disabled]="updateRestaurantForm.untouched"
-      >
-        Modifier les données
-      </button>
-    </div>
+      <div class="form-group row no-gutters mx-3">
+        <label
+          class="font-weight-bold col-12"
+          for="dateDerniereVisite"
+        >
+          Date de la dernière visite :
+        </label>
+        <input
+          class="col-4 form-control"
+          type="text"
+          name="dateDerniereVisite"
+          id="dateDerniereVisite"
+          formControlName="dateDerniereVisite"
+        />
+      </div>
+
+      <div class="row mx-3">
+        <div class="form-group row no-gutters">
+          <label
+            class="font-weight-bold col-12"
+            for="latitude"
+          >
+            Latitude :
+          </label>
+          <input
+            class="col-6 form-control"
+            type="text"
+            name="latitude"
+            id="latitude"
+            formControlName="latitude"
+          />
+        </div>
+
+        <div class="form-group row no-gutters mx-3">
+          <label
+            class="font-weight-bold col-12"
+            for="longitude"
+          >
+            Longitude :
+          </label>
+          <input
+            class="col-6 form-control"
+            type="text"
+            name="longitude"
+            id="longitude"
+            formControlName="longitude"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3 mt-5 row justify-content-center">
+        <button
+          class="btn btn-success"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="updateRestaurantForm.untouched"
+        >
+          Modifier les données
+        </button>
+      </div>
 
 
-  </form>
+    </form>
 
 </div>
 
-<div *ngIf="loading">
-  Chargement ...
 </div>

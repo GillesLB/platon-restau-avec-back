@@ -47,10 +47,10 @@ export class UpdateRestaurantComponent implements OnInit {
     this.loading = true;
 
     this.subscriber.add(
-      this.httpClient.get(this.url)
+      this.httpClient.get(this.url + this.id + `/data-restaurant`)
       .subscribe(
         (getData) => {
-          this.restaurant = getData[+(this.id) - 1];
+          this.restaurant = getData[0];
           this.fillDataRestaurant();
         },
         (error) => {
@@ -88,7 +88,7 @@ export class UpdateRestaurantComponent implements OnInit {
     this.loading = true;
 
     this.subscriber.add(
-      this.httpClient.post(
+      this.httpClient.put(
         this.url + `${this.id}/update-restaurant`,
         // tslint:disable-next-line:max-line-length
         {'nom': nom, 'adresse': adresse, 'dateDerniereVisite': dateDerniereVisite, 'latitude': latitude, 'longitude': longitude, 'nb_visite': nb_visite},

@@ -4,19 +4,23 @@
     <div class="font-weight-bold text-center titre my-3">Liste des restaurants :</div>
   </div>
 
-  <div class="row justify-content-center cotes mb-3">
+  <div class="row justify-content-center cotes mb-3" *ngIf="listeRestaurants.length === 0">
+    <i>Aucun restaurant pour le moment ...</i>
+  </div>
+
+  <div class="row justify-content-center cotes mb-3" *ngIf="listeRestaurants.length > 0">
     <table class="table table-striped">
 
-      <thead class="text-center thead-dark">
+      <thead class="thead-dark">
         <tr>
           <th scope="col" class="col-2">Nom</th>
           <th scope="col" class="col-3">Adresse</th>
-          <th scope="col" class="col-2">Visité le</th>
-          <th scope="col" class="col-1">Note</th>
-          <th scope="col" class="col-1">Nb visites</th>
-          <th scope="col" class="col-1">Détail</th>
-          <th scope="col" class="col-1">Mise à jour</th>
-          <th scope="col" class="col-1">Supprimer</th>
+          <th scope="col" class="text-center col-2">Visité le</th>
+          <th scope="col" class="text-center col-1">Note</th>
+          <th scope="col" class="text-center col-1">Nb visites</th>
+          <th scope="col" class="text-center col-1">Détail</th>
+          <th scope="col" class="text-center col-1">Modifier</th>
+          <th scope="col" class="text-center col-1">Supprimer</th>
         </tr>
       </thead>
 
@@ -59,6 +63,7 @@
                 type="button"
                 name="bouton-supprimer"
                 id="bouton-supprimer"
+                (click)="onDelete(restaurant)"
               >
                 <i class="fas fa-times"></i>
               </button>

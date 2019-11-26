@@ -1,13 +1,12 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import {Component, Injectable, OnDestroy} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
-import { restaurants } from 'src/app/core/liste-restaurants';
-import { IRestaurant, Restaurant } from 'src/app/core/restaurant';
-import { RestaurantsService } from 'src/app/features/services/restaurants.service';
+import {switchMap} from 'rxjs/operators';
+import { Subscriber} from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable()
 
@@ -16,66 +15,94 @@ import { RestaurantsService } from 'src/app/features/services/restaurants.servic
   templateUrl: './ajouter-restaurant.component.html',
   styleUrls: ['./ajouter-restaurant.component.css']
 })
-export class AjouterRestaurantComponent implements OnInit {
+export class AjouterRestaurantComponent implements OnDestroy {
 
   NOM_REGEX = '^[a-zA-Z0-9_]+$';
-  ADRESSE_REGEX = '^[a-zA-Z0-9_]+$';
+  ADRESSE_REGEX = '^[a-zA-Z0-9_\\s]+$';
   NOMBRE_REGEX = '^[0-9,.-]+$';
 
   listeNotes = ['', '1', '2', '3', '4', '5'];
 
-  restaurant$: Observable<object>;
+  ajouterRestaurantForm = new FormGroup({
+    nom: new FormControl('', [Validators.required, Validators.pattern(this.NOM_REGEX)]),
+    adresse: new FormControl('', [Validators.required, Validators.pattern(this.ADRESSE_REGEX)]),
+    dateDerniereVisite: new FormControl('', [Validators.required]),
+    latitude: new FormControl('', [Validators.required, Validators.pattern(this.NOMBRE_REGEX)]),
+    longitude: new FormControl('', [Validators.required, Validators.pattern(this.NOMBRE_REGEX)]),
+    note: new FormControl('', Validators.required),
+  });
 
-  formulaireAjouter = true;
+  loading = false;
+  note: number;
 
-  ajouterRestaurantForm: FormGroup;
+  readonly url = 'http://localhost:3000/restau/';
+
+  subscriber = new Subscriber();
 
   constructor(
-    private store: Store<{restaurant: object}>,
-    private restaurantsService: RestaurantsService,
-  ) {
-    this.restaurant$ = store.pipe(select('restaurant'));
-  }
-
-  ngOnInit() {
-    this.initForm();
-  }
-
-  initForm() {
-    this.ajouterRestaurantForm = new FormGroup({
-      nom: new FormControl('', [Validators.required, Validators.pattern(this.NOM_REGEX)]),
-      adresse: new FormControl('', [Validators.required, Validators.pattern(this.ADRESSE_REGEX)]),
-      dateDerniereVisite: new FormControl('', [Validators.required]),
-      latitude: new FormControl('', [Validators.required, Validators.pattern(this.NOMBRE_REGEX)]),
-      longitude: new FormControl('', [Validators.required, Validators.pattern(this.NOMBRE_REGEX)]),
-      note: new FormControl(),
-    });
-  }
+    private httpClient: HttpClient,
+    private router: Router,
+  ) { }
 
   envoyerFormulaire() {
-    const check = false;
+    this.loading = true;
+
     const nom = this.ajouterRestaurantForm.get('nom').value;
     const adresse = this.ajouterRestaurantForm.get('adresse').value;
     let dateDerniereVisite = this.ajouterRestaurantForm.get('dateDerniereVisite').value;
-    dateDerniereVisite = moment(dateDerniereVisite).format('DD/MM/YYYY');
-    const note = this.ajouterRestaurantForm.get('note').value;
-    const nombreVisite = 1;
-    const nombreCommentaire = 0;
-    const commentaire = null;
-    const restaurantId = restaurants.length + 1;
+    dateDerniereVisite = moment(dateDerniereVisite).format('YYYY-MM-DD');
+    this.note = this.ajouterRestaurantForm.get('note').value;
+    const nb_visite = 1;
     const latitude = this.ajouterRestaurantForm.get('latitude').value;
     const longitude = this.ajouterRestaurantForm.get('longitude').value;
-    // tslint:disable-next-line:max-line-length
-    const restaurantAAjouter = new Restaurant(check, nom, adresse, dateDerniereVisite, note, nombreVisite, latitude, longitude, nombreCommentaire, commentaire, restaurantId);
 
-    // this.store.dispatch(new RestaurantAdd(restaurantAAjouter));
-    this.restaurantsService.listeRestaurants.push(restaurantAAjouter);
-    console.log('Raa : ', restaurantAAjouter);
-    console.log('rsl : ', this.restaurantsService.listeRestaurants);
+    this.subscriber.add(
+      this.httpClient.post(
+        this.url + `ajouter-restaurant`,
+        // tslint:disable-next-line:max-line-length
+        {'nom': nom, 'adresse': adresse, 'latitude': latitude, 'longitude': longitude, 'nb_visite': nb_visite, 'date_visite': dateDerniereVisite},
+        {responseType: 'text'}
+      )
+        .subscribe(
+        () => {
+        },
+        (error) => {
+          console.log('Erreur submit restaurant : ', error);
+          this.loading = false;
+        },
+        () => {
+          this.postNote();
+        }
+      )
+    );
   }
 
-  cacherFormulaire() {
-    this.formulaireAjouter = !this.formulaireAjouter;
+  postNote() {
+   this.httpClient.get(this.url + `all`).pipe(
+     switchMap( (truc) => {
+        const id_restau = truc[(truc.length) - 1].id;
+      return this.httpClient.post(
+      this.url + `ajouter-note`,
+      {'id_restau': id_restau, 'note': this.note},
+      {responseType: 'text'}
+      );
+    })
+  ).subscribe(
+     () => {
+     },
+     (error) => {
+       console.log('Erreur submit note : ', error);
+       this.loading = false;
+     },
+     () => {
+       this.loading = false;
+       this.router.navigate(['liste']);
+     }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriber.unsubscribe();
   }
 
 }

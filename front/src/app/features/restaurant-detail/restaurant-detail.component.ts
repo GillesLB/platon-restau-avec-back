@@ -45,12 +45,13 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
 
     this.subscriber.add(
       forkJoin({
-        getData: this.httpClient.get(this.url),
+        getData: this.httpClient.get(this.url + this.id + `/data-restaurant`),
         getComments: this.httpClient.get(this.url + this.id)
       })
         .subscribe(
           ({getData, getComments}) => {
-            this.restaurant = getData[+(this.id) - 1];
+            this.restaurant = getData[0];
+            console.log('r : ', this.restaurant);
             this.commentaires = getComments;
           },
           (error) => {
@@ -66,16 +67,6 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
 
   ajouterNote(): void {
     this.router.navigate([`liste/${this.id}/ajouter-note`]);
-  }
-
-  cacherFiche() {
-    this.detailRestaurant = false;
-    this.formulaireNote = true;
-  }
-
-  montrerFiche() {
-    this.detailRestaurant = true;
-    this.formulaireNote = false;
   }
 
   ngOnDestroy(): void {
