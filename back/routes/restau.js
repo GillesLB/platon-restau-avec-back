@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const conn = require('../connection');
 const app = express();
 
-const getRestaurants = `SELECT id, nom, adresse, date_visite, AVG(note) AS note_moyenne, nb_visite
+const getRestaurants = `SELECT id, nom, adresse, date_visite, AVG(note) AS note_moyenne, latitude, longitude, nb_visite
                          FROM restaurants
                          INNER JOIN notes
                          ON restaurants.id = notes.id_restau
@@ -33,6 +33,20 @@ router.get('/:id', (req, res) => {
             console.log('Erreur de récupération : ', err);
         } else {
             res.send(rows);
+        }
+    })
+});
+
+router.post('/:id/update-restaurant', (req, res) => {
+    conn.query(`UPDATE restaurants
+                               SET nom = ?, adresse = ?, date_visite = ?, latitude = ?, longitude = ?, nb_visite = ?
+                               WHERE id = ${req.params.id}`,
+                                [req.body.nom, req.body.adresse, req.body.dateDerniereVisite, req.body.latitude, req.body.longitude, req.body.nb_visite],
+                                (err, rows, fields) => {
+        if (err) {
+            console.log('Erreur de mise en base : ', err);
+        } else {
+            res.sendStatus(200);
         }
     })
 });

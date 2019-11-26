@@ -27,6 +27,7 @@ import { MomentModule } from 'ngx-moment';
 import { TabsetComponent } from './shared/layout/tabset/tabset.component';
 import { CarteRestaurantsComponent } from './features/carte-restaurants/carte-restaurants.component';
 import { RestaurantsService } from 'src/app/features/services/restaurants.service';
+import { UpdateRestaurantComponent } from './features/update-restaurant/update-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RestaurantsService } from 'src/app/features/services/restaurants.servic
     PageAccueilComponent,
     TabsetComponent,
     CarteRestaurantsComponent,
+    UpdateRestaurantComponent,
   ],
   exports: [
     RouterModule
