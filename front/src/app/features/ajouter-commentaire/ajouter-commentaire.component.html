@@ -1,0 +1,62 @@
+<div class="row justify-content-center mt-3">
+
+  <div *ngIf="loading">
+    Envoi des données ...
+  </div>
+
+  <div class="border border-secondary bg-light col-4" *ngIf="!loading">
+
+    <form (ngSubmit)="envoyerCommentaire()" [formGroup]="ajouterCommentaireForm">
+
+      <div class="font-weight-bold text-center mt-3">Saisissez votre commentaire : </div>
+
+      <div class="row justify-content-center mt-3">
+
+        <div class="col-8 mb-3">
+          <label class="titre-formulaire" for="auteur">Auteur : </label>
+          <input
+            class="form-control"
+            type="text"
+            name="auteur"
+            id="auteur"
+            formControlName="auteur"
+          />
+        </div>
+
+      </div>
+
+      <div class="row justify-content-center mt-3">
+
+        <div class="mb-3">
+          <label class="titre-formulaire" for="commentaire">Commentaire : </label>
+          <textarea
+            rows="8"
+            class="col-12"
+            name="commentaire"
+            id="commentaire"
+            formControlName="commentaire"
+          >
+          </textarea>
+        </div>
+
+      </div>
+
+      <div class="row justify-content-center mt-3">
+
+        <button
+          class="btn btn-success"
+          type="submit"
+          name="bouton-envoyer"
+          id="bouton-envoyer"
+          [disabled]="ajouterCommentaireForm.invalid"
+        >
+          Envoyer le commentaire
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

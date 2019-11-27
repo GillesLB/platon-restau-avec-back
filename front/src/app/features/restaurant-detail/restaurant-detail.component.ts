@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 import {forkJoin, Subscriber} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-restaurant-detail',
@@ -10,14 +10,6 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./restaurant-detail.component.css']
 })
 export class RestaurantDetailComponent implements OnInit, OnDestroy {
-
-  detailRestaurant = true;
-  commentaireEnvoye = false;
-  noteEnvoyee = false;
-  formulaireNote = false;
-  formulaireComm = false;
-
-  nombreCommentaire = 0;
 
   loading = false;
 
@@ -46,12 +38,11 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
     this.subscriber.add(
       forkJoin({
         getData: this.httpClient.get(this.url + this.id + `/data-restaurant`),
-        getComments: this.httpClient.get(this.url + this.id)
+        getComments: this.httpClient.get(this.url + this.id + `/commentaires`)
       })
         .subscribe(
           ({getData, getComments}) => {
             this.restaurant = getData[0];
-            console.log('r : ', this.restaurant);
             this.commentaires = getComments;
           },
           (error) => {
@@ -67,6 +58,10 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
 
   ajouterNote(): void {
     this.router.navigate([`liste/${this.id}/ajouter-note`]);
+  }
+
+  ajouterCommentaire(): void {
+    this.router.navigate([`liste/${this.id}/ajouter-commentaire`]);
   }
 
   ngOnDestroy(): void {

@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import { Subscriber} from 'rxjs';
 import * as moment from 'moment';
+import {Note} from '../../core/note';
 
 @Injectable()
 
@@ -21,7 +22,13 @@ export class AjouterRestaurantComponent implements OnDestroy {
   ADRESSE_REGEX = '^[a-zA-Z0-9_\\s]+$';
   NOMBRE_REGEX = '^[0-9,.-]+$';
 
-  listeNotes = ['', '1', '2', '3', '4', '5'];
+  public notes: Note[] = [
+    {'avis': '😒 Beurk : ', 'note': 1},
+    {'avis': '🤨 Bof : ', 'note': 2},
+    {'avis': '🙂 Correct : ', 'note': 3},
+    {'avis': '😋 Bien : ', 'note': 4},
+    {'avis': '😍 Extra : ', 'note': 5}
+  ];
 
   ajouterRestaurantForm = new FormGroup({
     nom: new FormControl('', [Validators.required, Validators.pattern(this.NOM_REGEX)]),
@@ -80,7 +87,8 @@ export class AjouterRestaurantComponent implements OnDestroy {
   postNote() {
    this.httpClient.get(this.url + `all`).pipe(
      switchMap( (truc) => {
-        const id_restau = truc[(truc.length) - 1].id;
+        // @ts-ignore
+       const id_restau = truc[(truc.length) - 1].id;
       return this.httpClient.post(
       this.url + `ajouter-note`,
       {'id_restau': id_restau, 'note': this.note},

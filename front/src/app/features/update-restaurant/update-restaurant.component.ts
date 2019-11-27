@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
@@ -11,7 +11,7 @@ import * as moment from 'moment';
   templateUrl: './update-restaurant.component.html',
   styleUrls: ['./update-restaurant.component.css']
 })
-export class UpdateRestaurantComponent implements OnInit {
+export class UpdateRestaurantComponent implements OnInit, OnDestroy {
 
   id: string;
 
@@ -38,7 +38,7 @@ export class UpdateRestaurantComponent implements OnInit {
     private httpClient: HttpClient,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('restaurantId');
     this.getDataRestaurant();
   }
@@ -64,7 +64,7 @@ export class UpdateRestaurantComponent implements OnInit {
     );
   }
 
-  fillDataRestaurant() {
+  fillDataRestaurant(): void {
     this.bonneDate = moment(this.restaurant.date_visite).format('DD/MM/YYYY');
 
     this.updateRestaurantForm.patchValue({
@@ -76,7 +76,7 @@ export class UpdateRestaurantComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const nom = this.updateRestaurantForm.get(['nom']).value;
     const adresse = this.updateRestaurantForm.get(['adresse']).value;
     let dateDerniereVisite = this.updateRestaurantForm.get(['dateDerniereVisite']).value;
@@ -106,6 +106,10 @@ export class UpdateRestaurantComponent implements OnInit {
         }
       )
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriber.unsubscribe();
   }
 
 }

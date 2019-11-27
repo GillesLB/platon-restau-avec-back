@@ -1,22 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscriber} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 
-import {Subscriber} from 'rxjs';
-
-import { Note } from 'src/app/core/note';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-
 @Component({
-  selector: 'app-ajouter-note',
-  templateUrl: './ajouter-note.component.html',
-  styleUrls: ['./ajouter-note.component.css']
+  selector: 'app-ajouter-commentaire',
+  templateUrl: './ajouter-commentaire.component.html',
+  styleUrls: ['./ajouter-commentaire.component.css']
 })
-export class AjouterNoteComponent implements OnInit, OnDestroy {
-
-  noteForm = new FormGroup({
-    note: new FormControl('', Validators.required)
-  });
+export class AjouterCommentaireComponent implements OnInit, OnDestroy {
 
   id: string;
 
@@ -24,13 +17,10 @@ export class AjouterNoteComponent implements OnInit, OnDestroy {
 
   subscriber = new Subscriber();
 
-  public notes: Note[] = [
-    {'avis': '😒 Beurk : ', 'note': 1},
-    {'avis': '🤨 Bof : ', 'note': 2},
-    {'avis': '🙂 Correct : ', 'note': 3},
-    {'avis': '😋 Bien : ', 'note': 4},
-    {'avis': '😍 Extra : ', 'note': 5}
-  ];
+  ajouterCommentaireForm = new FormGroup({
+    auteur: new FormControl('', Validators.required),
+    commentaire: new FormControl('', Validators.required)
+  });
 
   readonly url = 'http://localhost:3000/restau/';
 
@@ -44,15 +34,16 @@ export class AjouterNoteComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.params['restaurantId'];
   }
 
-  envoyerNote(): void {
-    const nouvelleNote = this.noteForm.get('note').value;
+  envoyerCommentaire(): void {
+    const auteur = this.ajouterCommentaireForm.get('auteur').value;
+    const commentaire = this.ajouterCommentaireForm.get('commentaire').value;
 
     this.loading = true;
 
     this.subscriber.add(
       this.httpClient.post(
-        this.url + `${this.id}/ajouter-note`,
-        {'note': parseInt(nouvelleNote, 10)},
+        this.url + `${this.id}/ajouter-commentaire`,
+        {'auteur': auteur, 'commentaire': commentaire},
         {responseType: 'text'}
       ).subscribe(
         () => {

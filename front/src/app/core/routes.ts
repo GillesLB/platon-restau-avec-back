@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from 'src/app/features/page-not-found/page-not-
 import { CarteRestaurantsComponent } from 'src/app/features/carte-restaurants/carte-restaurants.component';
 import {AjouterNoteComponent} from '../features/ajouter-note/ajouter-note.component';
 import {UpdateRestaurantComponent} from '../features/update-restaurant/update-restaurant.component';
+import {AjouterCommentaireComponent} from '../features/ajouter-commentaire/ajouter-commentaire.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'accueil', pathMatch: 'full'},
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'liste', component: ListeRestaurantsComponent },
   { path: 'liste/:restaurantId', component: RestaurantDetailComponent },
   { path: 'liste/:restaurantId/ajouter-note', component: AjouterNoteComponent },
+  { path: 'liste/:restaurantId/ajouter-commentaire', component: AjouterCommentaireComponent },
   { path: 'ajouter-restaurant', component: AjouterRestaurantComponent },
   { path: 'liste/:restaurantId/update-restaurant', component: UpdateRestaurantComponent },
   { path: 'carte-restaurants', component: CarteRestaurantsComponent },

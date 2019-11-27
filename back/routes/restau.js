@@ -9,6 +9,7 @@ const getRestaurants = `SELECT id, nom, adresse, date_visite, AVG(note) AS note_
                          INNER JOIN notes
                          ON restaurants.id = notes.id_restau
                          GROUP BY restaurants.id
+                         ORDER BY restaurants.date_visite DESC
                         `;
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,8 +35,8 @@ router.get('/all', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
-    conn.query(`SELECT commentaire
+router.get('/:id/commentaires', (req, res) => {
+    conn.query(`SELECT commentaire, auteur
                                 FROM commentaires
                                 WHERE commentaires.id_restau = ${req.params.id}`
         , (err, rows, fields) => {
@@ -78,6 +79,16 @@ router.put('/:id/update-restaurant', (req, res) => {
 
 router.post('/:id/ajouter-note', (req, res) => {
     conn.query(`INSERT INTO notes (id_restau, note) VALUES (?, ?)`, [req.params.id, req.body.note], (err, rows, fields) => {
+        if (err) {
+            console.log('Erreur de mise en base : ', err);
+        } else {
+            res.sendStatus(200);
+        }
+    })
+});
+
+router.post('/:id/ajouter-commentaire', (req, res) => {
+    conn.query(`INSERT INTO commentaires (id_restau, auteur, commentaire) VALUES (?, ?, ?)`, [req.params.id, req.body.auteur, req.body.commentaire], (err, rows, fields) => {
         if (err) {
             console.log('Erreur de mise en base : ', err);
         } else {

@@ -44,36 +44,13 @@
           class="mb-2"
         >
           <ul>
-<!--            <li><span class="font-weight-bold">Auteur : </span>{{commentaire.auteur}}</li>-->
-            <li><span class="font-weight-bold">Commentaire : </span>{{commentaire.commentaire}}</li>
+            <li><span class="font-weight-bold">{{commentaire.auteur}} : </span>{{commentaire.commentaire}}</li>
           </ul>
         </div>
 
       </div>
 
     </div>
-
-  </div>
-
-  <div class="row justify-content-center">
-
-    <ngb-alert
-      *ngIf="commentaireEnvoye"
-      class="col-4 font-weight-bold text-center"
-      type="success"
-      [dismissible]="false"
-    >
-      Le commentaire a bien été envoyé !
-    </ngb-alert>
-
-    <ngb-alert
-      *ngIf="noteEnvoyee"
-      class="col-4 font-weight-bold text-center"
-      type="success"
-      [dismissible]="false"
-    >
-      La note a bien été envoyée !
-    </ngb-alert>
 
   </div>
 
@@ -95,42 +72,16 @@
     </button>
   </span>
 
-  <span *ngIf="formulaireNote">
-    <button
-      type="button"
-      class="btn btn-danger mx-4 mb-3"
-      (click)="montrerFiche()"
-    >
-      Annuler cette note
-    </button>
-  </span>
-
   <span *ngIf="detailRestaurant">
     <button
       type="button"
       class="btn btn-primary mx-4"
-      (click)="cacherVisibleNote(); cacherFicheRestaurant()"
+      (click)="ajouterCommentaire()"
     >
       Ajouter un commentaire
     </button>
   </span>
 
-  <span *ngIf="formulaireComm">
-    <button
-      type="button"
-      class="btn btn-danger mx-4"
-      (click)="cacherVisibleNote(); cacherFicheRestaurant()"
-    >
-      Annuler ce commentaire
-    </button>
-  </span>
-
 </div>
 
-<div *ngIf="formulaireComm">
-  <app-ajouter-commentaire></app-ajouter-commentaire>
-</div>
 
-<div *ngIf="formulaireNote">
-  <app-ajouter-note></app-ajouter-note>
-</div>

@@ -106,16 +106,16 @@
                   Note :
               </label>
               <select
-                  class="col-1 form-control"
+                  class="col-5 form-control"
                   name="note"
                   id="note"
                   formControlName="note"
               >
                   <option
-                      *ngFor="let note of listeNotes"
-                      [value]="note"
+                      *ngFor="let note of notes"
+                      [value]="note.note"
                   >
-                      {{note}}
+                    {{note.avis}} note de {{note.note}} sur 5
                   </option>
               </select>
           </div>

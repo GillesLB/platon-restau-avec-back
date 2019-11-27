@@ -1,5 +1,10 @@
 <div class="row justify-content-center mt-3">
-  <div class="border border-secondary bg-light col-4">
+
+  <div *ngIf="loading">
+    Envoi des données ...
+  </div>
+
+  <div class="border border-secondary bg-light col-4" *ngIf="!loading">
     <form [formGroup]="noteForm" (ngSubmit)="envoyerNote()">
 
       <div class="titre-page font-weight-bold text-center my-3">Choisissez votre note : </div>

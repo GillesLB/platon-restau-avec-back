@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 import {Subscriber} from 'rxjs';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-liste-restaurants',
@@ -15,9 +15,8 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
   pageSize = 7;
 
   listeRestaurants;
+
   loading = false;
-  nombreCommentaire = 0;
-  tableauNombreCommentaire: number[] = [];
 
   subscriber = new Subscriber();
 
@@ -40,8 +39,6 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
         .subscribe(
           (restauListe) => {
             this.listeRestaurants = restauListe;
-            console.log('tl : ', this.listeRestaurants);
-            // this.getCommentLength();
           },
           (error) => {
             console.log('Erreur : ', error);
@@ -54,8 +51,7 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
     );
   }
 
-  onDelete(restaurant) {
-    console.log('r : ', restaurant);
+  onDelete(restaurant): void {
     this.loading = false;
 
     this.subscriber.add(

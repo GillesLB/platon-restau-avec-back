@@ -18,9 +18,7 @@ import { PageNotFoundComponent } from 'src/app/features/page-not-found/page-not-
 import { RestaurantDetailComponent } from './features/restaurant-detail/restaurant-detail.component';
 import { AjouterRestaurantComponent } from './features/ajouter-restaurant/ajouter-restaurant.component';
 import { SupprimerRestaurantComponent } from './features/supprimer-restaurant/supprimer-restaurant.component';
-// import { AjouterNoteComponent } from './shared/layout/ajouter-note/ajouter-note.component';
 import { AjouterNoteComponent } from './features/ajouter-note/ajouter-note.component';
-import { AjouterCommentaireComponent } from './shared/layout/ajouter-commentaire/ajouter-commentaire.component';
 import { PageAccueilComponent } from './features/page-accueil/page-accueil.component';
 import { environment } from 'src/environments/environment.prod';
 import { MomentModule } from 'ngx-moment';
@@ -28,6 +26,7 @@ import { TabsetComponent } from './shared/layout/tabset/tabset.component';
 import { CarteRestaurantsComponent } from './features/carte-restaurants/carte-restaurants.component';
 import { RestaurantsService } from 'src/app/features/services/restaurants.service';
 import { UpdateRestaurantComponent } from './features/update-restaurant/update-restaurant.component';
+import {AjouterCommentaireComponent} from './features/ajouter-commentaire/ajouter-commentaire.component';
 
 @NgModule({
   declarations: [
