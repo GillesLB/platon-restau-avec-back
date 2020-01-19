@@ -1,7 +1,7 @@
 <div *ngIf="!loading">
 
-  <div>
-    <div class="font-weight-bold text-center titre my-3">Liste des restaurants :</div>
+  <div class="font-weight-bold text-center titre my-3" *ngIf="listeRestaurants.length > 0">
+    Liste des restaurants :
   </div>
 
   <div class="row justify-content-center cotes mb-3" *ngIf="listeRestaurants.length === 0">
@@ -27,13 +27,13 @@
       <tbody>
         <ng-container *ngFor="let restaurant of listeRestaurants | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
           <tr>
-            <td scope="col" class="font-weight-bold">{{restaurant.nom}}</td>
-            <td scope="col">{{restaurant.adresse}}</td>
-            <td scope="col" class="text-center">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
-            <td scope="col" *ngIf="restaurant.note_moyenne > 0" class="text-center">{{restaurant.note_moyenne | number:'1.0-1'}} / 5</td>
-            <td scope="col" *ngIf="restaurant.note_moyenne === 0" class="text-center">-</td>
-            <td scope="col" class="text-center">{{restaurant.nb_visite}}</td>
-            <td scope="col" class="text-center">
+            <td class="font-weight-bold">{{restaurant.nom}}</td>
+            <td>{{restaurant.adresse}}</td>
+            <td class="text-center">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
+            <td *ngIf="restaurant.note_moyenne > 0" class="text-center">{{restaurant.note_moyenne | number:'1.0-1'}} / 5</td>
+            <td *ngIf="restaurant.note_moyenne === 0" class="text-center">-</td>
+            <td class="text-center">{{restaurant.nb_visite}}</td>
+            <td class="text-center">
               <a [routerLink]="['/liste', restaurant.id]">
                 <button
                   class="btn btn-secondary btn-sm"
@@ -45,7 +45,7 @@
                 </button>
               </a>
             </td>
-            <td scope="col" class="text-center">
+            <td class="text-center">
               <a [routerLink]="['/liste', restaurant.id, 'update-restaurant']">
                 <button
                   class="btn btn-primary btn-sm"
@@ -57,13 +57,15 @@
                 </button>
               </a>
             </td>
-            <td scope="col" class="text-center">
+            <td class="text-center">
               <button
                 class="btn btn-danger btn-sm"
                 type="button"
                 name="bouton-supprimer"
                 id="bouton-supprimer"
-                (click)="onDelete(restaurant)"
+                data-toggle="modal"
+                data-target="#deleteModal"
+                (click)="onFocus(restaurant)"
               >
                 <i class="fas fa-times"></i>
               </button>
@@ -90,6 +92,32 @@
 
 </div>
 
-<div *ngIf="loading">
-  Chargement ...
+<div *ngIf="loading" class=" mt-3 text-center justify-content-center">
+  <div class="spinner-border text-primary mr-2" role="status"></div>
+  <span>Chargement ...</span>
+</div>
+
+<div *ngIf="!loading && errors?.length > 0">
+  <span class="alert-warning">{{errors?.message}}</span>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Etes-vous sur de vouloir effacer ce restaurant ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="onDelete(selectedRestaurant)">Confirmer</button>
+      </div>
+    </div>
+  </div>
 </div>

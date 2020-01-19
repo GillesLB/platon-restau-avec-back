@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
 
 import {Subscriber} from 'rxjs';
 
@@ -15,23 +14,24 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
   pageSize = 7;
 
   listeRestaurants;
+  errors;
 
   loading = false;
+  selectedRestaurant = {};
 
-  subscriber = new Subscriber();
+  private subscriber = new Subscriber();
 
   readonly url = 'http://localhost:3000/restau/';
 
   constructor(
     public httpClient: HttpClient,
-    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.getRestaurants();
   }
 
-  getRestaurants(): void {
+  private getRestaurants(): void {
     this.loading = true;
 
     this.subscriber.add(
@@ -41,7 +41,7 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
             this.listeRestaurants = restauListe;
           },
           (error) => {
-            console.log('Erreur : ', error);
+            this.errors = error;
             this.loading = false;
           },
           () => {
@@ -49,6 +49,10 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
           }
         )
     );
+  }
+
+  onFocus(restaurant): void {
+    this.selectedRestaurant = restaurant;
   }
 
   onDelete(restaurant): void {
@@ -60,12 +64,13 @@ export class ListeRestaurantsComponent implements OnInit, OnDestroy {
           () => {
           },
           (error) => {
-            console.log('Erreur : ', error);
+            this.errors = error;
             this.loading = false;
           },
           () => {
             this.loading = false;
-            this.router.navigate(['/']);
+            window.location.reload();
+            // this.router.navigate(['/']);
           }
         )
     );
