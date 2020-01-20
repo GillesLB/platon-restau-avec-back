@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RestaurantDetailComponent } from './restaurant-detail.component';
+import {MomentModule} from 'ngx-moment';
+import {RouterModule} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('RestaurantDetailComponent', () => {
   let component: RestaurantDetailComponent;
@@ -8,7 +11,14 @@ describe('RestaurantDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RestaurantDetailComponent ]
+      declarations: [
+        RestaurantDetailComponent,
+      ],
+      imports: [
+        MomentModule,
+        RouterModule.forRoot([]),
+        HttpClientModule,
+      ]
     })
     .compileComponents();
   }));
@@ -21,5 +31,9 @@ describe('RestaurantDetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show good date', () => {
+
   });
 });

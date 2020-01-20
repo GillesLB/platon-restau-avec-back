@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AjouterNoteComponent } from './ajouter-note.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('AjouterNoteComponent', () => {
   let component: AjouterNoteComponent;
@@ -8,7 +11,15 @@ describe('AjouterNoteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AjouterNoteComponent ]
+      declarations: [
+        AjouterNoteComponent
+      ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([]),
+        HttpClientModule,
+      ]
     })
     .compileComponents();
   }));

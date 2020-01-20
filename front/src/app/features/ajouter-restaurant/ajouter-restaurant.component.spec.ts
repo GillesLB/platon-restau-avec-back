@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AjouterRestaurantComponent } from './ajouter-restaurant.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterModule} from '@angular/router';
 
 describe('AjouterRestaurantComponent', () => {
   let component: AjouterRestaurantComponent;
@@ -8,7 +11,15 @@ describe('AjouterRestaurantComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AjouterRestaurantComponent ]
+      declarations: [
+        AjouterRestaurantComponent,
+      ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterModule.forRoot([]),
+      ]
     })
     .compileComponents();
   }));

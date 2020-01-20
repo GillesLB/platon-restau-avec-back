@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabsetComponent } from './tabset.component';
+import {RouterModule} from '@angular/router';
 
 describe('TabsetComponent', () => {
   let component: TabsetComponent;
@@ -8,7 +9,12 @@ describe('TabsetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TabsetComponent ]
+      declarations: [
+        TabsetComponent,
+      ],
+      imports: [
+        RouterModule.forRoot([]),
+      ]
     })
     .compileComponents();
   }));

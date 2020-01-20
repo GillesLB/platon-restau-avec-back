@@ -13,9 +13,11 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
 
   loading = false;
 
-  subscriber = new Subscriber();
+  private subscriber = new Subscriber();
 
   id: string;
+  errors = [];
+
   restaurant;
   commentaires;
 
@@ -46,7 +48,7 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
             this.commentaires = getComments;
           },
           (error) => {
-            console.log('Erreur : ', error);
+            this.errors = error;
             this.loading = false;
           },
           () => {
@@ -54,14 +56,6 @@ export class RestaurantDetailComponent implements OnInit, OnDestroy {
           }
         )
     );
-  }
-
-  ajouterNote(): void {
-    this.router.navigate([`liste/${this.id}/ajouter-note`]);
-  }
-
-  ajouterCommentaire(): void {
-    this.router.navigate([`liste/${this.id}/ajouter-commentaire`]);
   }
 
   ngOnDestroy(): void {
