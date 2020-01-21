@@ -29,7 +29,7 @@
           <tr>
             <td class="font-weight-bold">{{restaurant.nom}}</td>
             <td>{{restaurant.adresse}}</td>
-            <td class="text-center">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
+            <td class="text-center bla">{{restaurant.date_visite | amParse:'YYYY-MM-DD' | amDateFormat: 'DD/MM/YYYY'}}</td>
             <td *ngIf="restaurant.note_moyenne > 0" class="text-center">{{restaurant.note_moyenne | number:'1.0-1'}} / 5</td>
             <td *ngIf="restaurant.note_moyenne === 0" class="text-center">-</td>
             <td class="text-center">{{restaurant.nb_visite}}</td>
