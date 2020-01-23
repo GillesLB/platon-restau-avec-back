@@ -24,6 +24,8 @@ import { TabsetComponent } from './shared/layout/tabset/tabset.component';
 import { CarteRestaurantsComponent } from './features/carte-restaurants/carte-restaurants.component';
 import { UpdateRestaurantComponent } from './features/update-restaurant/update-restaurant.component';
 import { AjouterCommentaireComponent } from './features/ajouter-commentaire/ajouter-commentaire.component';
+import { StatRestaurantComponent } from './features/stat-restaurant/stat-restaurant.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { AjouterCommentaireComponent } from './features/ajouter-commentaire/ajou
     TabsetComponent,
     CarteRestaurantsComponent,
     UpdateRestaurantComponent,
+    StatRestaurantComponent,
   ],
   exports: [
     RouterModule,
@@ -59,7 +62,8 @@ import { AjouterCommentaireComponent } from './features/ajouter-commentaire/ajou
       relativeTimeThresholdOptions: {
         'm': 59
       }
-    })
+    }),
+    GoogleChartsModule.forRoot(),
   ],
   providers: [
     RestaurantDetailComponent,

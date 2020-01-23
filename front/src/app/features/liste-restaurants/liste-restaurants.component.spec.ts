@@ -52,8 +52,14 @@ describe('ListeRestaurantsComponent', () => {
   it('should focus on a restaurant', () => {
     const restaurant = {nom: 'Truc'};
     component.onFocus(restaurant);
-    spyOn(component, 'onFocus').and.returnValue(of(restaurant.nom))
+    // spyOn(component, 'onFocus').and.returnValue(of(restaurant.nom))
     expect(component.selectedRestaurant['nom']).toEqual('Truc');
+  });
+
+  it('should focus on a different restaurant', () => {
+    const restaurant = {nom: 'Truc'};
+    component.onFocus(restaurant);
+    expect(component.selectedRestaurant['nom']).not.toEqual('Machin');
   });
 
   // it('should show the good date', () => {

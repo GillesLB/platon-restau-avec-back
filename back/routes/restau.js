@@ -35,6 +35,20 @@ router.get('/all', (req, res) => {
     });
 });
 
+router.get('/commentaires', (req, res) => {
+    conn.query(`SELECT commentaire, auteur, nom
+                                FROM commentaires
+                                INNER JOIN restaurants
+                                WHERE commentaires.id_restau = restaurants.id`
+                                , (err, rows, fields) => {
+            if (err) {
+                console.log('Erreur de récupération : ', err);
+            } else {
+                res.send(rows);
+            }
+        })
+});
+
 router.get('/:id/commentaires', (req, res) => {
     conn.query(`SELECT commentaire, auteur
                                 FROM commentaires

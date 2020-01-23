@@ -9,6 +9,7 @@ import { CarteRestaurantsComponent } from 'src/app/features/carte-restaurants/ca
 import {AjouterNoteComponent} from '../features/ajouter-note/ajouter-note.component';
 import {UpdateRestaurantComponent} from '../features/update-restaurant/update-restaurant.component';
 import {AjouterCommentaireComponent} from '../features/ajouter-commentaire/ajouter-commentaire.component';
+import { StatRestaurantComponent } from '../features/stat-restaurant/stat-restaurant.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'accueil', pathMatch: 'full'},
@@ -20,5 +21,6 @@ export const routes: Routes = [
   { path: 'ajouter-restaurant', component: AjouterRestaurantComponent },
   { path: 'liste/:restaurantId/update-restaurant', component: UpdateRestaurantComponent },
   { path: 'carte-restaurants', component: CarteRestaurantsComponent },
+  { path: 'stat-restaurants', component: StatRestaurantComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
