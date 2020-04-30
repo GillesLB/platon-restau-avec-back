@@ -32,7 +32,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^2.6.9",
     "google-charts": "^2.0.0",
-    "jquery": "^1.12.4",
+    "jquery": "^3.5.0",
     "leaflet": "^1.5.1",
     "moment": "^2.24.0",
     "ngx-moment": "^3.4.0",
